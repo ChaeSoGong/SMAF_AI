@@ -5,7 +5,6 @@ from hook.sentiment import SentimentApi
 from hook.stt import SttApi
 import makeData
 
-# flask
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_restful import Resource, Api
