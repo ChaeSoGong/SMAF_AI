@@ -11,11 +11,13 @@ dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
-
 class SentimentApi(Resource):
     def post(self):
+
         data = request.get_json()
         content = data.get('content')
+        print(content)
+        result = content
 
         # CLOVA Studio sentiment
         client_id = os.getenv('client_id')
@@ -42,5 +44,5 @@ class SentimentApi(Resource):
                 result = "Sentiment response is not 200 : " + response.json()
                 # return result
         except requests.exceptions.RequestException as e:
-            return jsonify({"Sentiment except : " + str(e)}), 400
+            return jsonify({"Sentiment except : " + str(e)})
         return result

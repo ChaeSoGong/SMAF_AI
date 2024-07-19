@@ -2,20 +2,23 @@ import sys
 import requests
 import dotenv
 import os
-from flask import request, jsonify
-from flask_restful import Resource
+# from flask import request, jsonify
+from flask import jsonify
+# from flask_restful import Resource
 
 dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
-class SttApi(Resource):
-    def post(self):
+# class SttApi(Resource):
+#     def post(self):
+class Stt():
+    def stt(self):
         client_id = os.getenv('client_id')
         client_secret = os.getenv('client_secret')
         lang = "Kor"  # 언어 코드 ( Kor, Jpn, Eng, Chn )
         url="https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + lang
-        data = open(r'C:\Users\jangs\PycharmProjects\smaf\content\_posts_assets_2020-01-13-stt-step-by-step_original.mp3', 'rb')
+        data = open(r'C:\Users\jangs\PycharmProjects\smaf\content\audioData.wav', 'rb')
         headers = {
             "X-NCP-APIGW-API-KEY-ID": client_id,
             "X-NCP-APIGW-API-KEY": client_secret,
@@ -26,9 +29,10 @@ class SttApi(Resource):
             rescode = response.status_code
             result = response.json()
             if rescode == 200:
-                result = result["text"]
+                return {"result":result["text"], "status_code":200}
+                # return jsonify({"result": result["text"], "status": 200})
             else:
-                result = "STT response is not 200 : " + result["text"]
+                return {"result": "STT response is not 200", "status_code": 400}
+
         except requests.exceptions.RequestException as e:
-            return jsonify({"STT except : " + str(e)}), 400
-        return jsonify(result)
+            return {"result": str(e), "status_code": 400}
