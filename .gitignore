@@ -5,8 +5,8 @@ __pycache__/
 *$py.class
 
 .env
-venv/*
-idea/*
+.idea/workspace.xml
+.venv/*
 
 # C extensions
 *.so
