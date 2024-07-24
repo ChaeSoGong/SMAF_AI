@@ -1,6 +1,5 @@
 # excel
 import csv
-import pandas as pd
 
 def excel(cID,tID,text,response):
     f = open('smaf.csv', 'a', encoding='utf-8', newline='')

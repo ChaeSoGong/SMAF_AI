@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60c37dff-ca04-4278-8713-084053ff9bf6" name="Changes" comment="240725 gitIgnore">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +47,9 @@
     &quot;accountId&quot;: &quot;77271ec9-b5f1-43ed-bd21-1aac823f4763&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -202,7 +205,7 @@
       <workItem from="1721287372675" duration="3137000" />
       <workItem from="1721290571702" duration="10431000" />
       <workItem from="1721372974106" duration="2494000" />
-      <workItem from="1721833880549" duration="1837000" />
+      <workItem from="1721833880549" duration="3512000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -260,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721835665690</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="240725 gitIgnore">
+      <option name="closed" value="true" />
+      <created>1721835912894</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1721835912894</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
