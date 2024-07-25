@@ -1,8 +1,8 @@
 import base64
 import logging
 import os
-from src.hook.CompletionExecutor import CompletionExecutor
-from src.hook.stt import Stt
+from hook.CompletionExecutor import CompletionExecutor
+from hook.stt import Stt
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel

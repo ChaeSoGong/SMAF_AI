@@ -7,7 +7,7 @@ __pycache__/
 .env
 .idea/
 .venv/*
-src/content/*
+content/*
 
 # C extensions
 *.so
