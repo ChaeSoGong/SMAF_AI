@@ -1,18 +1,29 @@
 # hook
+from starlette.middleware.cors import CORSMiddleware
+
 from hook.saveVoice import SaveVoiceAPI
 
-from flask import Flask
-from flask_cors import CORS
-from flask_restful import Api
+from fastapi import FastAPI
+app = FastAPI()
 
-app = Flask(__name__)
-CORS(app)  # client와 server가 동일 선상에 있을 때는 없어도 됨.
-api = Api(app)
+# api.add_resource(SaveVoiceAPI,'/saveVoice')
+# CORS 설정
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 필요에 따라 변경
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+@app.post("/saveVoice")
+async def save_voice(data: SaveVoiceAPI):  # SaveVoiceAPI는 FastAPI에서 사용할 수 있는 형태로 변환해야 합니다.
+    # SaveVoiceAPI의 처리 로직을 여기에 추가
+    return {"message": "Voice saved"}
 
-api.add_resource(SaveVoiceAPI,'/saveVoice')
 
 def main():
-   app.run(debug=True, port=5000, host='0.0.0.0')
+   import uvicorn
+   uvicorn.run(app, host="0.0.0.0", port=2000)
 
 
 if __name__ == '__main__':
