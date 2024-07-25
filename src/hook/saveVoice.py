@@ -1,9 +1,9 @@
 import base64
 import logging
 import os
-from hook.CompletionExecutor import CompletionExecutor
-from hook.stt import Stt
-from fastapi import FastAPI, HTTPException
+from src.hook.CompletionExecutor import CompletionExecutor
+from src.hook.stt import Stt
+from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from fastapi import APIRouter
@@ -24,7 +24,7 @@ class SaveVoiceAPI:
 
             audio_bytes = base64.b64decode(audio)
 
-            content_dir = os.getenv('CONTENT_DIR',r'C:\Users\jangs\PycharmProjects\smaf\content')
+            content_dir = os.getenv('CONTENT_DIR', r'/content')
             file_path = os.path.join(content_dir,filename)
 
             with open(file_path, "wb") as f:

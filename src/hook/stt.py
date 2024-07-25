@@ -14,7 +14,7 @@ class Stt():
         client_secret = os.getenv('client_secret')
         lang = "Kor"  # 언어 코드 ( Kor, Jpn, Eng, Chn )
         url="https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + lang
-        data = open(r'C:\Users\jangs\PycharmProjects\smaf\content\audioData.wav', 'rb')
+        data = open(r'/content/audioData.wav', 'rb')
         headers = {
             "X-NCP-APIGW-API-KEY-ID": client_id,
             "X-NCP-APIGW-API-KEY": client_secret,
