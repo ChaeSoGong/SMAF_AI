@@ -1,25 +1,26 @@
 import base64
-
-from flask_restful import Resource
 import logging
-import requests
-from flask import request, jsonify
 import os
 from hook.CompletionExecutor import CompletionExecutor
-
-
 from hook.stt import Stt
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+from fastapi import APIRouter
+
+class Model(BaseModel):
+    audio: str
+    filename: str
 
 
-class SaveVoiceAPI(Resource):
-    def post(self):
+class SaveVoiceAPI:
+    router = APIRouter()
+
+    @router.post("/saveVoice")
+    def save(data: Model):
         try:
-            data = request.get_json(silent=True)
-            if data is None:
-                logging.warning("saveVoice request.get_json error: invalid JSON data ")
-                return jsonify({"error":"invalid JSON data"})
-            audio = data['audio']
-            filename = data['filename']
+            audio = data.audio
+            filename = data.filename
 
             audio_bytes = base64.b64decode(audio)
 
@@ -30,16 +31,17 @@ class SaveVoiceAPI(Resource):
                 f.write(audio_bytes)
                 # 녹음 파일 text로 변경
                 stt_instance = Stt()  # Stt 클래스의 인스턴스 생성
-                sttResult = stt_instance.stt()  # stt 메서드 호출
-                if(sttResult.get("status_code") == 200):
-                        completion_instance = CompletionExecutor()
-                        response = completion_instance.completionExecutor(sttResult.get("result"))
-                        if(response.get("status_code") == 200):
-                            return jsonify({"result":response.get("result"),"status_code":200})
-                        else:
-                            return jsonify({"CompletionExecutor else ": response.get("result"),"status_code":400})
+                stt_result = stt_instance.stt()  # stt 메서드 호출
+                if stt_result.get("status_code") == 200:
+                    completion_instance = CompletionExecutor()
+                    response = completion_instance.completionExecutor(stt_result.get("result"))
+                    if response.get("status_code") == 200:
+                        return JSONResponse(content={"result":response.get("result"),"status_code":200})
+                    else:
+                        return JSONResponse(content={"CompletionExecutorError": response.get("result"),"status_code":400})
                 else:
-                    return sttResult# 에러났을 때 확인해보기
+                    return JSONResponse(content =stt_result)
 
         except Exception as e:
-            return jsonify({"error": str(e), "status_code": 400})
+            logging.error(str(e))  # 에러 로그 추가
+            raise HTTPException(status_code=400, detail=str(e))

@@ -63,11 +63,6 @@ class CompletionExecutor:
         with requests.post(self._host + '/testapp/v1/chat-completions/HCX-DASH-001', #testapp 지우면 에러
                            headers=headers, json=completion_request, stream=True) as r:
             r.raise_for_status()
-            # data = r.json()
-            # content = data["result"]["message"]["content"]
-            # print(content)
-            # result = r.json()
-            # print(result.result.message)
             longest_line=""
             for line in r.iter_lines():
                 if line:

@@ -2,16 +2,12 @@ import sys
 import requests
 import dotenv
 import os
-# from flask import request, jsonify
-from flask import jsonify
-# from flask_restful import Resource
+from fastapi.responses import JSONResponse
 
 dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
-# class SttApi(Resource):
-#     def post(self):
 class Stt():
     def stt(self):
         client_id = os.getenv('client_id')
@@ -29,7 +25,7 @@ class Stt():
             rescode = response.status_code
             result = response.json()
             if rescode == 200:
-                return {"result":result["text"], "status_code":200}
+                return {"result":result["text"], "status_code": 200}
                 # return jsonify({"result": result["text"], "status": 200})
             else:
                 return {"result": "STT response is not 200", "status_code": 400}
