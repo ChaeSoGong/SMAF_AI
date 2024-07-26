@@ -20,7 +20,7 @@ class Stt():
         file_path = os.path.join(base_dir, 'content', filename)
 
         data = open(file_path, 'rb')
-        # logging.warning("stt file_path ", file_path)
+        logging.warning("stt file_path ", file_path)
         headers = {
             "X-NCP-APIGW-API-KEY-ID": client_id,
             "X-NCP-APIGW-API-KEY": client_secret,
@@ -31,8 +31,7 @@ class Stt():
             rescode = response.status_code
             result = response.json()
             if rescode == 200:
-                return {"result":result["text"], "status_code": 200}
-                # return jsonify({"result": result["text"], "status": 200})
+                return {"result": result["text"], "status_code": 200}
             else:
                 return {"result": "STT response is not 200", "status_code": 400}
 
