@@ -11,7 +11,7 @@ app.include_router(SaveVoiceAPI.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # 필요에 따라 변경
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
