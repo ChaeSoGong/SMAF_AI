@@ -24,8 +24,9 @@ class SaveVoiceAPI:
 
             audio_bytes = base64.b64decode(audio)
 
-            content_dir = os.getenv('CONTENT_DIR', r'/content')
-            file_path = os.path.join(content_dir,filename)
+            # content_dir = os.getenv('CONTENT_DIR', './content')
+            # file_path = os.path.join(content_dir, filename)
+            file_path = './content/audioData.wav'
 
             with open(file_path, "wb") as f:
                 f.write(audio_bytes)
