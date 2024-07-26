@@ -10,14 +10,15 @@ dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
 class Stt():
-    def stt(self, filename):
+    def stt(self, file_path):
         client_id = os.getenv('client_id')
         client_secret = os.getenv('client_secret')
         lang = "Kor"  # 언어 코드 ( Kor, Jpn, Eng, Chn )
         url = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + lang
 
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(base_dir, 'content', filename)
+        # base_dir = os.path.dirname(os.path.abspath(__file__))
+        # file_path = os.path.join(base_dir, 'content', filename)
+
 
         data = open(file_path, 'rb')
         headers = {
