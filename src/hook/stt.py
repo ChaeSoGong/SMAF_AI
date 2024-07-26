@@ -20,7 +20,6 @@ class Stt():
         file_path = os.path.join(base_dir, 'content', filename)
 
         data = open(file_path, 'rb')
-        logging.warning("stt file_path ", file_path)
         headers = {
             "X-NCP-APIGW-API-KEY-ID": client_id,
             "X-NCP-APIGW-API-KEY": client_secret,
@@ -33,7 +32,7 @@ class Stt():
             if rescode == 200:
                 return {"result": result["text"], "status_code": 200}
             else:
-                return {"result": "STT response is not 200", "status_code": 400}
+                return {"result": "STT response is not 200"+result, "status_code": 400}
 
         except requests.exceptions.RequestException as e:
             return {"result": str(e), "status_code": 400}

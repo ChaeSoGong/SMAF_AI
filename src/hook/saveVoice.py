@@ -33,16 +33,16 @@ class SaveVoiceAPI:
                 f.write(audio_bytes)
                 # 녹음 파일 text로 변경
                 stt_instance = Stt()  # Stt 클래스의 인스턴스 생성
-                stt_result = stt_instance.stt(filename)  # stt 메서드 호출
+                stt_result = stt_instance.stt(f)  # stt 메서드 호출
                 if stt_result.get("status_code") == 200:
                     completion_instance = CompletionExecutor()
                     response = completion_instance.completionExecutor(stt_result.get("result"))
                     if response.get("status_code") == 200:
                         return JSONResponse(content={"result":response.get("result"),"status_code":200})
                     else:
-                        return JSONResponse(content={"CompletionExecutorError": response.get("result"),"status_code":400})
+                        return JSONResponse(content={"CompletionExecutorError": response.get("result"),"status_code": 400})
                 else:
-                    return JSONResponse(content= stt_result)
+                    return JSONResponse(content={"result": stt_result, "status_code": 400})
 
         except Exception as e:
             logging.error(str(e))  # 에러 로그 추가
