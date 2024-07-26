@@ -33,7 +33,7 @@ class Stt():
             if rescode == 200:
                 return {"result": result["text"], "status_code": 200}
             else:
-                return {"result": "STT response is not 200"+result, "status_code": 400}
+                return {"result": "STT response is not 200", "status_code": 400}
 
         except requests.exceptions.RequestException as e:
             return {"result": str(e), "status_code": 400}
