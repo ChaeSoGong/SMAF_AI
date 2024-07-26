@@ -1,3 +1,4 @@
+import logging
 import sys
 import requests
 import dotenv
@@ -9,12 +10,17 @@ dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
 class Stt():
-    def stt(self):
+    def stt(self, filename):
         client_id = os.getenv('client_id')
         client_secret = os.getenv('client_secret')
         lang = "Kor"  # 언어 코드 ( Kor, Jpn, Eng, Chn )
-        url="https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + lang
-        data = open(r'./content/audioData.wav', 'rb')
+        url = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + lang
+
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(base_dir, 'content', filename)
+
+        data = open(file_path, 'rb')
+        # logging.warning("stt file_path ", file_path)
         headers = {
             "X-NCP-APIGW-API-KEY-ID": client_id,
             "X-NCP-APIGW-API-KEY": client_secret,
