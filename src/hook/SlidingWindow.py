@@ -43,6 +43,7 @@ class SlidingWindow:
           "maxTokens" : 200,
           "messages" : {data_list}
         }""", strict=False)
+        logging.warning(request_data)
 
         res = self._send_request(request_data)
         if res['status']['code'] == '20000':
