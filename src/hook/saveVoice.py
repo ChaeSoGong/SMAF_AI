@@ -24,8 +24,6 @@ class SaveVoiceAPI:
 
             audio_bytes = base64.b64decode(audio)
 
-            # content_dir = os.getenv('CONTENT_DIR', './content')
-            # file_path = os.path.join(content_dir, filename)
             base_dir = os.path.dirname(os.path.abspath(__file__))
             file_path = os.path.join(base_dir, 'content', filename)
             logging.warning(file_path)
@@ -38,7 +36,7 @@ class SaveVoiceAPI:
                     completion_instance = CompletionExecutor()
                     response = completion_instance.completionExecutor(stt_result.get("result"))
                     if response.get("status_code") == 200:
-                        return JSONResponse(content={"result":response.get("result"),"status_code":200})
+                        return JSONResponse(content={"result": response.get("result"), "status_code": 200})
                     else:
                         return JSONResponse(content={"CompletionExecutorError": response.get("result"),"status_code": 400})
                 else:
