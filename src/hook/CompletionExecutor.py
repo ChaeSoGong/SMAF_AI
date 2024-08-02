@@ -47,7 +47,6 @@ class CompletionExecutor:
 
     def completionExecutor(self, text):
         try:
-            logging.warning("hihi")
             completion_executor = CompletionExecutor()
             preset_text = completion_executor.create_preset(text)
             request_data = {

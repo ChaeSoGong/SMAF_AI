@@ -26,7 +26,6 @@ class SaveVoiceAPI:
 
             base_dir = os.path.dirname(os.path.abspath(__file__))
             file_path = os.path.join(base_dir, 'content', filename)
-            # logging.warning(file_path)
             with open(file_path, "wb") as f:
                 f.write(audio_bytes)
                 # 녹음 파일 text로 변경
