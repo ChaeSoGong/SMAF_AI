@@ -3,6 +3,8 @@
 import base64
 import json
 import http.client
+import logging
+
 import dotenv
 import os
 
@@ -35,17 +37,34 @@ class SlidingWindow:
         conn.close()
         return result
 
-    def execute(self,data_list):
-        request_data = json.loads(json.dumps({
-            "maxTokens": 200,
-            "messages": data_list
-        }), strict=False)
+    def execute(self, data_list):
 
-        res = self._send_request(request_data)
-        if res['status']['code'] == '20000':
-            return res['result']['messages']
-        else:
-            return 'Error'
+        try:
+            request_data = {
+                "maxTokens": 200,
+                "messages": data_list
+            }
+            logging.warning(data_list)
+            json_data = json.dumps(request_data)
+            res = self._send_request(json_data)
+            if res['status']['code'] == '20000':
+                return res['result']['messages']
+            else:
+                return 'Error'
+        except TypeError as e:
+            logging.error("JSON serialization error: %s", e)
+            logging.error("Data that caused the error: %s", data_list)
+
+        # request_data = json.loads(json.dumps({
+        #     "maxTokens": 200,
+        #     "messages": data_list
+        # }))
+        #
+        # res = self._send_request(request_data)
+        # if res['status']['code'] == '20000':
+        #     return res['result']['messages']
+        # else:
+        #     return 'Error'
 
 
 
