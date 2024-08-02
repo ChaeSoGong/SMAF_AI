@@ -18,7 +18,6 @@ class PromptJson:
                 # JSON 파일에서 데이터 읽기
                 data_list = json.load(infile)
         except (FileNotFoundError, json.JSONDecodeError):
-            # 파일이 없거나 비어있으면 빈 리스트 생성
             data_list = []
 
         data_list.append(data)
