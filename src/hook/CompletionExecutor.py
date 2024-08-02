@@ -25,12 +25,13 @@ class CompletionExecutor:
     def create_preset(self, text):
         base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, 'prompt.json')
-
+        logging.warning(file_path)
         try:
             with open(file_path, 'r', encoding='utf-8') as infile:
                 # JSON 파일에서 데이터 읽기
                 data_list = json.load(infile)
         except (FileNotFoundError, json.JSONDecodeError):
+            logging.warning("here")
             data_list = []
         data_list.append({"role": "user", "content": text})
 
@@ -47,8 +48,10 @@ class CompletionExecutor:
 
     def completionExecutor(self, text):
         try:
+            logging.warning("hihi")
             completion_executor = CompletionExecutor()
             preset_text = completion_executor.create_preset(text)
+            logging.warning("hihi")
             request_data = {
                 'messages': preset_text,
                 'topP': 0.8,
@@ -60,11 +63,8 @@ class CompletionExecutor:
                 'includeAiFilters': True,
                 'seed': 0
             }
-            logging.warning("!")
             response_data = completion_executor.execute(request_data)
-            logging.warning("s")
             if (response_data):
-                logging.warning("t")
                 prompt_executor = PromptJson()
                 prompt_executor.prompt(text, response_data)
                 return {"result": response_data, "status_code": 200}
