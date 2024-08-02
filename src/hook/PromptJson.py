@@ -4,7 +4,6 @@ import os
 
 class PromptJson:
     def prompt(self, query, response):
-        logging.warning("hihi")
         base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, 'prompt.json')
         data = {"role": "user", "content": query}
@@ -18,6 +17,5 @@ class PromptJson:
 
         data_list.append(data)
         data_list.append(assistant_data)
-        logging.warning("dataset", data_list)
         with open(file_path, 'w', encoding='utf-8') as outfile:
             json.dump(data_list, outfile, ensure_ascii=False, indent=4)
