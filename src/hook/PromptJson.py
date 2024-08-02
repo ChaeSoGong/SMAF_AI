@@ -5,7 +5,6 @@ import os
 class PromptJson:
     def prompt(self, query, response):
         logging.warning("hihi")
-
         base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, 'prompt.json')
         data = {"role": "user", "content": query}

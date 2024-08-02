@@ -62,8 +62,10 @@ class CompletionExecutor:
             }
             response_data = completion_executor.execute(request_data)
             if (response_data):
+                logging.warning("prompt before")
                 prompt_executor = PromptJson()
                 prompt_executor.prompt(text, response_data)
+                logging.warning("prompt after")
                 return {"result": response_data, "status_code": 200}
 
         except Exception as e:
