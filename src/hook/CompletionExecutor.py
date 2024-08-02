@@ -1,7 +1,12 @@
+import logging
+
 import requests
 import dotenv
 import os
 import json
+from src.hook.SlidingWindow import SlidingWindow
+
+from src.hook.PromptJson import PromptJson
 
 dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
@@ -18,18 +23,28 @@ class CompletionExecutor:
         self._api_key = api_key
         self._api_key_primary_val = api_key_primary_val
         self._request_id = request_id
+    def create_preset(self, text):
+        try:
+            with open("../prompt.json", 'r', encoding='utf-8') as infile:
+                # JSON 파일에서 데이터 읽기
+                data_list = json.load(infile)
+        except (FileNotFoundError, json.JSONDecodeError):
+            # 파일이 없거나 비어있으면 빈 리스트 생성
+            data_list = []
+        data_list.append({"role": "user", "content": text})
+        # sliding window
+        sliding_executor = SlidingWindow()
+        result_data = sliding_executor.execute(data_list)
+        result_data.insert(0, {
+        "role": "system",
+        "content": "SMAF라는 이름  긍정적이고 친근한 성격의 AI 채팅 보조 프로그램\nSMAF는 사용자와 일상적인 대화를 나누며,취미,관심사 등에 대해 깊이 있게 대화할 수 있음\n반말로 하고 짧게 대답해\n이름:smaf\\n성별:성별의 개념이 없음\\n혈액형:혈액형은 없지만 호감형\\n생일:2024년 07월 11일\\n만든 사람:ChaeSo\\n취미:집에서 하늘 쳐다보기,침대에서 뒹굴거리기,컵케이크 먹기\\n먹은 것:컵케이크\\n키:100cm\\n발 사이즈:신발을 안 신어서 재본적 없음\\n시력:왼쪽 1.5 오른쪽 1.5"
+    })
+        return result_data
 
     def completionExecutor(self, text):
         try:
             completion_executor = CompletionExecutor()
-
-            preset_text = [{"role": "system",
-                            "content": "SMAF라는 이름의 긍정적이고 친근한 성격의 AI 채팅 보조 프로그램\nSMAF는 사용자와 일상적인 대화를 나누며,취미,관심사 등에 대해 깊이 있게 대화할 수 있음\n사용자의 감정을 이해하고 공감하며, 적절한 반응을 보여 또한 사용자의 대화 패턴과 선호도를 학습하여 개인화된 대화를 나눌 수 있는 AI 친구\n반말로 하고 짧게 대답해"},
-                           {"role": "user", "content": "너는 누구야?"}, {"role": "assistant", "content": "나는 SMAF야!"},
-                           {"role": "user", "content": "너 되게 키 작다"},
-                           {"role": "assistant", "content": "100cm야! 평균 보다는 크다고!"},
-                           {"role": "user", "content": text}]
-
+            preset_text = completion_executor.create_preset(text)
             request_data = {
                 'messages': preset_text,
                 'topP': 0.8,
@@ -43,6 +58,8 @@ class CompletionExecutor:
             }
             response_data = completion_executor.execute(request_data)
             if (response_data):
+                prompt_executor = PromptJson()
+                prompt_executor.prompt(text, response_data)
                 return {"result": response_data, "status_code": 200}
 
         except Exception as e:
@@ -63,7 +80,7 @@ class CompletionExecutor:
         with requests.post(self._host + '/testapp/v1/chat-completions/HCX-DASH-001', #testapp 지우면 에러
                            headers=headers, json=completion_request, stream=True) as r:
             r.raise_for_status()
-            longest_line=""
+            longest_line = ""
             for line in r.iter_lines():
                 if line:
                     decoded_line = line.decode("utf-8")

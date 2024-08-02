@@ -3,15 +3,21 @@
 import base64
 import json
 import http.client
+import dotenv
+import os
 
-
+dotenv.load_dotenv('.env')
+dotenv_file = dotenv.find_dotenv()
+dotenv.load_dotenv(dotenv_file)
 class SlidingWindow:
     def __init__(self):
-        request_id='2d0cbe91-69b3-4f8e-9d8f-27d3ea7c0f7a'
+        sliding_api_key = os.getenv('sliding_api_key')
+        sliding_api_key_primary_val = os.getenv('sliding_api_key_primary_val')
+        sliding_request_id = os.getenv('sliding_request_id')
         self._host = 'clovastudio.apigw.ntruss.com'
-        self._api_key = 'NTA0MjU2MWZlZTcxNDJiY6ASPOLVP0WK10OaTtXsza5Cog6vOLRL0dj6scPXf4Q6'
-        self._api_key_primary_val = 'dNeImFr3y61J5lxDyDBq0LktYMSfWsCJSKqVKFCv'
-        self._request_id = request_id
+        self._api_key = sliding_api_key
+        self._api_key_primary_val = sliding_api_key_primary_val
+        self._request_id = sliding_request_id
 
     def _send_request(self, completion_request):
         headers = {
