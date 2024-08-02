@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 
 
@@ -6,9 +7,10 @@ import os
 
 class PromptJson:
     def prompt(self, query, response):
+        logging.warning(query)
         base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, 'prompt.json')
-
+        logging.warning(file_path)
         data = {"role": "user", "content": query}
         assistant_data = {"role": "assistant", "content": response}
         try:
