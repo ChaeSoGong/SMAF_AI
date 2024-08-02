@@ -61,6 +61,7 @@ class CompletionExecutor:
                 'seed': 0
             }
             response_data = completion_executor.execute(request_data)
+            logging.warning("is null?")
             if (response_data):
                 logging.warning("prompt before")
                 prompt_executor = PromptJson()
