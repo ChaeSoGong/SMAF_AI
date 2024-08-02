@@ -24,14 +24,18 @@ class CompletionExecutor:
         self._api_key_primary_val = api_key_primary_val
         self._request_id = request_id
     def create_preset(self, text):
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(base_dir, 'prompt.json')
         try:
-            with open("../prompt.json", 'r', encoding='utf-8') as infile:
+            with open(file_path, 'r', encoding='utf-8') as infile:
                 # JSON 파일에서 데이터 읽기
                 data_list = json.load(infile)
         except (FileNotFoundError, json.JSONDecodeError):
             # 파일이 없거나 비어있으면 빈 리스트 생성
             data_list = []
+        logging.warning("create_preset ",file_path)
         data_list.append({"role": "user", "content": text})
+
         # sliding window
         sliding_executor = SlidingWindow()
         result_data = sliding_executor.execute(data_list)
