@@ -33,7 +33,7 @@ class CompletionExecutor:
         except (FileNotFoundError, json.JSONDecodeError):
             # 파일이 없거나 비어있으면 빈 리스트 생성
             data_list = []
-        logging.warning("create_preset ",file_path)
+        logging.warning("create_preset ",data_list)
         data_list.append({"role": "user", "content": text})
 
         # sliding window
