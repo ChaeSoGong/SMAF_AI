@@ -60,8 +60,11 @@ class CompletionExecutor:
                 'includeAiFilters': True,
                 'seed': 0
             }
+            logging.warning("!")
             response_data = completion_executor.execute(request_data)
+            logging.warning("s")
             if (response_data):
+                logging.warning("t")
                 prompt_executor = PromptJson()
                 prompt_executor.prompt(text, response_data)
                 return {"result": response_data, "status_code": 200}

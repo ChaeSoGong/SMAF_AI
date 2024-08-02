@@ -27,7 +27,6 @@ class Stt():
             rescode = response.status_code
             result = response.json()
             if rescode == 200:
-                logging.warning(result["text"])
                 return {"result": result["text"], "status_code": 200}
             else:
                 return {"result": "STT response is not 200", "status_code": 400}
