@@ -4,7 +4,7 @@ import requests
 import dotenv
 import os
 import json
-from src.hook.SlidingWindow import SlidingWindow
+# from src.hook.SlidingWindow import SlidingWindow
 
 from src.hook.PromptJson import PromptJson
 
@@ -40,7 +40,7 @@ class CompletionExecutor:
         "role": "system",
         "content": "SMAF라는 이름  긍정적이고 친근한 성격의 AI 채팅 보조 프로그램\nSMAF는 사용자와 일상적인 대화를 나누며,취미,관심사 등에 대해 깊이 있게 대화할 수 있음\n반말로 하고 짧게 대답해\n이름:smaf\\n성별:성별의 개념이 없음\\n혈액형:혈액형은 없지만 호감형\\n생일:2024년 07월 11일\\n만든 사람:ChaeSo\\n취미:집에서 하늘 쳐다보기,침대에서 뒹굴거리기,컵케이크 먹기\\n먹은 것:컵케이크\\n키:100cm\\n발 사이즈:신발을 안 신어서 재본적 없음\\n시력:왼쪽 1.5 오른쪽 1.5"
     })
-        logging.warning("create_preset ", data_list)
+        # logging.warning("create_preset ", data_list)
 
         return data_list
         # return data_list
