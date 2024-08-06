@@ -22,14 +22,15 @@ class SlidingWindow:
         self._request_id = sliding_request_id
 
     def _send_request(self, completion_request):
-        headers = {
-            'Content-Type': 'application/json; charset=utf-8',
-            'X-NCP-CLOVASTUDIO-API-KEY': self._api_key,
-            'X-NCP-APIGW-API-KEY': self._api_key_primary_val,
-            'X-NCP-CLOVASTUDIO-REQUEST-ID': self._request_id
-        }
-
         try:
+
+            headers = {
+                'Content-Type': 'application/json; charset=utf-8',
+                'X-NCP-CLOVASTUDIO-API-KEY': self._api_key,
+                'X-NCP-APIGW-API-KEY': self._api_key_primary_val,
+                'X-NCP-CLOVASTUDIO-REQUEST-ID': self._request_id
+            }
+
             conn = http.client.HTTPSConnection(self._host)
             logging.warning(type(json.dumps(completion_request)))
             conn.request('POST', '/v1/api-tools/sliding/chat-messages/HCX-DASH-001', json.dumps(completion_request),
@@ -37,9 +38,10 @@ class SlidingWindow:
             response = conn.getresponse()
             result = json.loads(response.read().decode(encoding='utf-8'))
             conn.close()
+            return result
         except Exception as e:
-            logging.error("An error occurred: %s", e)
-        return result
+            logging.error("er occurred: %s", e)
+
 
     def execute(self, data_list):
         try:
