@@ -29,14 +29,16 @@ class SlidingWindow:
             'X-NCP-CLOVASTUDIO-REQUEST-ID': self._request_id
         }
 
-        conn = http.client.HTTPSConnection(self._host)
-        logging.warning("hi")
-        logging.warning(type(completion_request))
-        conn.request('POST', '/v1/api-tools/sliding/chat-messages/HCX-DASH-001', json.dumps(completion_request),
-                     headers)
-        response = conn.getresponse()
-        result = json.loads(response.read().decode(encoding='utf-8'))
-        conn.close()
+        try:
+            conn = http.client.HTTPSConnection(self._host)
+            logging.warning(type(json.dumps(completion_request)))
+            conn.request('POST', '/v1/api-tools/sliding/chat-messages/HCX-DASH-001', json.dumps(completion_request),
+                         headers)
+            response = conn.getresponse()
+            result = json.loads(response.read().decode(encoding='utf-8'))
+            conn.close()
+        except Exception as e:
+            logging.error("An error occurred: %s", e)
         return result
 
     def execute(self, data_list):
@@ -46,8 +48,6 @@ class SlidingWindow:
                 "maxTokens" : 200,
                 "messages" : %s
             }""" % messages_json, strict=False)
-            logging.warning(request_data)
-            logging.warning(type(request_data))
             res = self._send_request(request_data)
 
             if res['status']['code'] == '20000':
