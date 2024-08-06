@@ -30,6 +30,8 @@ class SlidingWindow:
         }
 
         conn = http.client.HTTPSConnection(self._host)
+        logging.warning("hi")
+        logging.warning(type(completion_request))
         conn.request('POST', '/v1/api-tools/sliding/chat-messages/HCX-DASH-001', json.dumps(completion_request),
                      headers)
         response = conn.getresponse()
@@ -44,6 +46,7 @@ class SlidingWindow:
                 "maxTokens" : 200,
                 "messages" : %s
             }""" % messages_json, strict=False)
+            logging.warning(request_data)
             logging.warning(type(request_data))
             res = self._send_request(request_data)
 
