@@ -38,18 +38,25 @@ class SlidingWindow:
         return result
 
     def execute(self, data_list):
+        try:
+            messages_json = json.dumps(data_list)
+            request_data = json.loads("""{
+                "maxTokens" : 200,
+                "messages" : %s
+            }""" % messages_json, strict=False)
+            logging.warning(type(request_data))
+            res = self._send_request(request_data)
 
-        request_data = json.loads(f"""{
-          "maxTokens" : 200,
-          "messages" : {data_list}
-        }""", strict=False)
-        logging.warning(request_data)
+            if res['status']['code'] == '20000':
+                return res['result']['messages']
+            else:
+                return 'Error'
 
-        res = self._send_request(request_data)
-        if res['status']['code'] == '20000':
-            return res['result']['messages']
-        else:
-            return 'Error'
+        except Exception as e:
+            logging.error("An error occurred: %s", e)
+
+
+
 
 
 
