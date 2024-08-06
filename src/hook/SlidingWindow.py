@@ -58,7 +58,8 @@ class SlidingWindow:
             #     "messages" : %s
             # }""" % messages_json, strict=False)
             res = self._send_request(request_data)
-
+            print(request_data)
+            print(res)
             if res['status']['code'] == '20000':
                 return res['result']['messages']
             else:
