@@ -41,7 +41,7 @@ class SlidingWindow:
         try:
             messages_json = json.dumps(data_list)
             request_data = json.loads("""{
-                "maxTokens" : 200,
+                "maxTokens" : 2000,
                 "messages" : %s
             }""" % messages_json, strict=False)
             res = self._send_request(request_data)
