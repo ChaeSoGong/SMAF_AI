@@ -3,9 +3,12 @@ import logging
 import os
 
 class PromptJson:
-    def prompt(self, query, response):
+    def prompt(self,type, query, response):
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(base_dir, 'prompt.json')
+        if type == 0:
+            file_path = os.path.join(base_dir, 'prompt.json')
+        else:
+            file_path = os.path.join(base_dir, 't_prompt.json')
         data = {"role": "user", "content": query}
         assistant_data = {"role": "assistant", "content": response}
         try:

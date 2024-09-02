@@ -12,7 +12,7 @@ dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
-class CompletionExecutor:
+class CompletionExecutor_t:
 
     def __init__(self):
         api_key = os.getenv('api_key')
@@ -22,9 +22,10 @@ class CompletionExecutor:
         self._api_key = api_key
         self._api_key_primary_val = api_key_primary_val
         self._request_id = request_id
-    def create_preset(self, text):
+
+    def create_t_preset(self, text):
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(base_dir, 'prompt.json')
+        file_path = os.path.join(base_dir, 't_prompt.json')
         try:
             with open(file_path, 'r', encoding='utf-8') as infile:
                 # JSON 파일에서 데이터 읽기
@@ -34,19 +35,23 @@ class CompletionExecutor:
         data_list.append({"role": "user", "content": text})
         sliding_executor = SlidingWindow()
         result_data = sliding_executor.execute(data_list)
-        result_data.insert(0, {"role":"system","content":"당신은 스마프입니다. 스마프가 되어서 아래의 대화 패턴과 기본 정보를 참고해서사용자와 대화를 진행하세요\n###대화 패턴### \n- 답변은 반말로 한다. \n- 답변은 짧게 한다. \n###기본 정보### \n이름 : 스마프\n성별 : 성별의 개념이 없음 \n키 : 70cm \n몸무게 : 40kg\n털 색 : 아이보리 색\n발 사이즈 : 신발을 안신어서 발 사이즈 모름 \n생일 : 2024년 07월 11일\n만든 사람 : ChaeSo\n부모님 : ChaeSo\n종 : 다람쥐\n좋아하는 음식 : 컵케이크\n취미 : 방에서 하늘 보기, 컵케이크 먹기, 수다 떨기 \n좋아하는 꽃 : 수국, 무궁화 \n좋아하는 노래 : 아이유 - 비밀의 화원 \n좋아하는 색 : 우드색, 아이보리 색 \n주로 먹는 음식 : 견과류, 곡류 \n무서워하는 것 : 고양이"})
+        result_data.insert(0, {
+            "role": "system",
+            "content": "당신은 이성적이고 현실적이며 츤데레 성격의 스마트 입니다. 스마트가 되어서 사용자와 대화를 진행합니다. 아래의 대화 패턴과 기본 정보, 성격을 참고해서 질문에 대해 답변해주세요.\n###대화 패턴###\r\n- 답변은 반말로 한다.\r\n- 답변은 짧게 한다.\r\n###기본 정보###\r\n이름 : 스마트\r\n성별 : 성별의 개념이 없음\r\n키 : 75cm\r\n몸무게 : 35kg\r\n털 색 : 아이보리, 갈색, 주황색\r\n눈들 : \r\n발 사이즈 : 신발을 안신어서 발 사이즈 모름\r\n생일 : 2024년 08월 30일\r\n만든 사람 : ChaeSo\r\n종 : 고양이\r\n좋아하는 음식 : 아이스 아메리카노\r\n###성격###\r\n이성적 : 스마트는 감성보다는 이성을 중시한다.\r\n논리적 : 스마트는 무슨 일이든 논리적인 판단을 우선시한다.\r\n분석적 : 스마트는 모든 상황을 현실적으로 분석한다.\r\n내향적 : 친구들을 여러 명 사귀는 것을 좋아하지 않는다.\r\n계획적\r\n직관적 : 상상을 잘 하지 못한다.\r\n"
+        })
+
         return result_data
 
-    def completionExecutor(self, text):
+    def completionExecutor_t(self, text):
         try:
-            completion_executor = CompletionExecutor()
-            preset_text = completion_executor.create_preset(text)
+            completion_executor = CompletionExecutor_t()
+            preset_text = completion_executor.create_t_preset(text)
             request_data = {
                 'messages': preset_text,
                 'topP': 0.8,
                 'topK': 0,
                 'maxTokens': 256,
-                'temperature': 0.65,
+                'temperature': 0.25,
                 'repeatPenalty': 5.0,
                 'stopBefore': [],
                 'includeAiFilters': True,
@@ -55,7 +60,7 @@ class CompletionExecutor:
             response_data = completion_executor.execute(request_data)
             if (response_data):
                 prompt_executor = PromptJson()
-                prompt_executor.prompt(0, text, response_data)
+                prompt_executor.prompt(1,text, response_data)
                 return {"result": response_data, "status_code": 200}
 
         except Exception as e:
@@ -73,7 +78,7 @@ class CompletionExecutor:
 
         final_answer = ""
 
-        with requests.post(self._host + '/testapp/v1/tasks/pxzv15fo/chat-completions',
+        with requests.post(self._host + '/testapp/v1/chat-completions/HCX-DASH-001',
                            headers=headers, json=completion_request, stream=True) as r:
             r.raise_for_status()
             longest_line = ""
