@@ -11,6 +11,8 @@ import os
 dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
+
+
 class SlidingWindow:
     def __init__(self):
         sliding_api_key = os.getenv('sliding_api_key')
@@ -35,7 +37,6 @@ class SlidingWindow:
         result = json.loads(response.read().decode(encoding='utf-8'))
         conn.close()
         return result
-
 
     def execute(self, data_list):
         try:

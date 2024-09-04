@@ -2,10 +2,12 @@ import json
 import logging
 import os
 
+
 class PromptJson:
-    def prompt(self,type, query, response):
+    @staticmethod
+    def prompt(f_or_t, query, response):
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        if type == 0:
+        if f_or_t == 0:
             file_path = os.path.join(base_dir, 'prompt.json')
         else:
             file_path = os.path.join(base_dir, 't_prompt.json')

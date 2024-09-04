@@ -1,18 +1,17 @@
 import logging
-
 import requests
 import dotenv
 import os
 import json
 from src.hook.SlidingWindow import SlidingWindow
-
 from src.hook.PromptJson import PromptJson
 
 dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
-class CompletionExecutor_t:
+
+class CompletionExecutorT:
 
     def __init__(self):
         api_key = os.getenv('api_key')
@@ -23,7 +22,8 @@ class CompletionExecutor_t:
         self._api_key_primary_val = api_key_primary_val
         self._request_id = request_id
 
-    def create_t_preset(self, text):
+    @staticmethod
+    def create_t_preset(text):
         base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, 't_prompt.json')
         try:
@@ -39,10 +39,10 @@ class CompletionExecutor_t:
 
         return result_data
 
-    def completionExecutor_t(self, text):
+    @staticmethod
+    def completion_executor_t(text):
         try:
-            completion_executor = CompletionExecutor_t()
-            preset_text = completion_executor.create_t_preset(text)
+            preset_text = CompletionExecutorT().create_t_preset(text)
             request_data = {
                 'messages': preset_text,
                 'topP': 0.8,
@@ -54,8 +54,8 @@ class CompletionExecutor_t:
                 'includeAiFilters': True,
                 'seed': 0
             }
-            response_data = completion_executor.execute(request_data)
-            if (response_data):
+            response_data = CompletionExecutorT().execute(request_data)
+            if response_data:
                 prompt_executor = PromptJson()
                 prompt_executor.prompt(1,text, response_data)
                 return {"result": response_data, "status_code": 200}

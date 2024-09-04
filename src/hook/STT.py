@@ -9,8 +9,10 @@ dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
-class Stt():
-    def stt(self, file_path):
+
+class STT:
+    @staticmethod
+    def stt(file_path):
         client_id = os.getenv('client_id')
         client_secret = os.getenv('client_secret')
         lang = "Kor"  # 언어 코드 ( Kor, Jpn, Eng, Chn )

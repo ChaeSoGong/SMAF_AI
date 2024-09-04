@@ -1,12 +1,14 @@
 # hook
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
-# from src.hook.CreateTaskExecutor import CreateTaskExecutor
-from src.hook.saveVoice import SaveVoiceAPI
+from src.hook.SaveVoice import SaveVoiceAPI
 from fastapi import FastAPI
-
+# from src.Ex import Ex
+from src.hook.TTS import TTS
 app = FastAPI()
 app.include_router(SaveVoiceAPI.router)
+app.include_router(TTS.router)
+# app.include_router(Ex.router)
 
 # CORS 설정
 app.add_middleware(
