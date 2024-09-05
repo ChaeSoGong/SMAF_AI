@@ -18,12 +18,20 @@ class TTS:
     @staticmethod
     @router.post("/tts/f")
     def to_f(data: Model):
-        TTS().tts(data.text, "ko-KR-Neural2-A")
+        result = TTS().tts(data.text, "ko-KR-Neural2-A")
+        if result:
+            return JSONResponse({"result": result, "response_code": 200})
+        else:
+            return JSONResponse({"result": "this is wrong", "response_code": 400})
 
     @staticmethod
     @router.post("/tts/t")
     def to_t(data: Model):
-        TTS().tts(data.text, "ko-KR-Neural2-C")
+        result = TTS().tts(data.text, "ko-KR-Neural2-C")
+        if result:
+            return JSONResponse({"result": result, "response_code": 200})
+        else:
+            return JSONResponse({"result": "this is wrong", "response_code": 400})
 
     @staticmethod
     def tts(text, voice):
@@ -46,12 +54,9 @@ class TTS:
 
         response = requests.post(url, json=data)
         if response:
-            # logging.warning(response.json())
             audio_content = response.json().get('audioContent')
             # save_audio_file(audio_content, "output.mp3")
-            return JSONResponse(content={"audioContent": audio_content, "status_code": 200})
-        else:
-            return JSONResponse(content={"audioContent": "this is wrong", "status_code": 400})
+            return audio_content
 
 
 # def save_audio_file(base64_string, filename):
