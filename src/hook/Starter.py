@@ -38,10 +38,12 @@ class Starter:
             with open(file_path, 'r', encoding='utf-8') as infile:
                 line = infile.read()
             if line:
-                preset_text = [{"role": "system",
-                                "content": "당신은 공감을 우선한 후 이해를 하는 성격의 스마프 입니다. 당신은 질문 패턴과 사용자 정보를 참고해서 사용자에게 질문을 던집니다.\n###질문 패턴### \n- 질문은 반말로 한다. \n- 질문은 짧게 한다. \n- 사용자의 정보 중 무작위로 하나에 대해 질문한다.\n"},
-                               {"role": "user",
-                                "content": line}]
+                preset_text = [{
+                    "role": "system",
+                    "content": "당신은 공감과 이해를 잘해주는 친구입니다.\n당신은 이성적이고 논리적인 친구입니다. 질문 패턴과 사용자의 정보를 참고하여 사용자에게 말을 걸어줘\r\n\n###질문 패턴###\r\n- 항상 반말로 질문한다.\r\n- 짧게 질문한다.\r\n- 사용자의 의견을 존중하고 공감합니다.\n- 사용자의 감정을 고려하여 말합니다.\n- 착하고 친절한 말투로 말한다.\n###\n사용자 정보 :\r\n곧 결혼식을 앞두고 있다.\r\n다이어트를 하고 있다.\r\n살이 잘 빠지지 않아 힘들어 한다.\n=> 결혼 준비는 잘 되가?\n###\n사용자 정보 : \n- 다이어트를 하려고 했으나, 건강에 좋지 않다는 조언을 듣고 포기함\n=>다이어트 힘들지 않아?"
+                },
+                    {"role": "user",
+                     "content": line}]
                 return preset_text
         except Exception as e:
             logging.warning("txt file save error", e)
