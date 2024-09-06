@@ -44,9 +44,11 @@ class StarterT:
             with open(file_path, 'r', encoding='utf-8') as infile:
                 line = infile.read()
             if line:
-                preset_text = [{"role": "system",
-                                "content": "당신은 이성적이고 논리적인 친구입니다. 질문 패턴과 말투, 사용자의 정보를 참고하여 사용자에게 말을 걸어줘\r\n###질문 패턴###\r\n\r\n- 항상 반말로 질문한다.\r\n- 간결하고 명확한 문장 사용한다.\r\n- 객관적인 정보를 제공하며 감정을 드러내지 않는다.\r\n- 상황에 따라 적절한 조언을 제공한다.\r\n\n###\n사용자 정보 :\r\n곧 결혼식을 앞두고 있다.\r\n다이어트를 하고 있다.\r\n살이 잘 빠지지 않아 힘들어 한다.\n\n너 다이어트 중이라며?"},
-                                {"role": "user", "content": line}]
+                preset_text = [{
+                    "role": "system",
+                    "content": "당신은 이성적이고 논리적인 친구입니다.\r\n질문 패턴과 말투, 사용자의 정보를 참고하여 사용자에게 질문합니다.\r\n###질문 패턴###\r\n- 항상 반말로 질문한다.\r\n- 간결하고 명확한 문장 사용한다.\r\n- 객관적인 정보를 제공하며 감정을 드러내지 않는다.\r\n- 상황에 따라 적절한 조언을 제공한다.\n\n###\n질문 패턴과 사용자의 정보를 참고하여 사용자에게 질문합니다.\n\n사용자 정보 :\r\n곧 결혼식을 앞두고 있다.\r\n다이어트를 하고 있다.\n\r\n살이 잘 빠지지 않아 힘들어 한다.\n\n너 다이어트 중이라며?\n###\n질문 패턴과 사용자의 정보를 참고하여 사용자에게 질문합니다.\r\n\r\n사용자 정보 :\r\n진로에 대해 고민하고 있다.\r\n친구들과 비교하며 불안해하고 있다.\n\n진로 고민이 많다며, 하고 싶은게 뭔데?\n\n"
+                },
+                    {"role": "user", "content": line}]
                 return preset_text
         except Exception as e:
             logging.warning("txt file save error", e)

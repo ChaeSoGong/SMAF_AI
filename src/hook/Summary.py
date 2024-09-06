@@ -44,9 +44,11 @@ class ConversationSummary:
             f_text = "\n".join(map(str, f_data_list))  # data_list를 문자열로 변환
             t_text = "\n".join(map(str, t_data_list))  # data_list를 문자열로 변환
             text = f_text + t_text
-            preset_text = [{"role": "system",
-                            "content": "대화 내용을 통해 사용자 정보를 요약하세요.\n###\n대화 내용 : \r\n[\r\n    {\r\n        \"role\": \"user\",\r\n        \"content\": \"나 너무 걱정돼\"\r\n    },\r\n    {\r\n        \"role\": \"assistant\",\r\n        \"content\": \"걱정되는 게 있구나 무슨 일 있어?\"\r\n    },\r\n    {\r\n        \"role\": \"user\",\r\n        \"content\": \"곧 있으면 개발자 경진대회인데 내가 잘하고 있나 그런 생각이 들어\"\r\n    }\n]\n사용자 정보 요약 : \n- 개발자 경진대회를 앞두고 걱정이 많음\n\n###\r\n대화 내용 : \r\n    {\r\n        \"role\": \"user\",\r\n        \"content\": \"대회 끝나고 떡볶이 먹을거야~!\"\r\n    },\r\n    {\r\n        \"role\": \"assistant\",\r\n        \"content\": \"떡볶이 좋지! 대회 잘 끝내고 같이 먹으러 가자\"\r\n    }\n사용자 정보 요약 : \r\n- 대회가 끝난 후 떡볶이를 먹을 예정임\n\n###\r\n대화 내용 : \r\n    {\r\n        \"role\": \"user\",\r\n        \"content\": \"좋아 너는 매운거 잘먹어?\"\r\n    },\r\n    {\r\n        \"role\": \"assistant\",\r\n        \"content\": \"나는 잘 먹지는 못해. 너는 잘 먹어?\"\r\n    },\r\n    {\r\n        \"role\": \"user\",\r\n        \"content\": \"응! 나는 매운거 좋아해!\"\r\n    },\r\n    {\r\n        \"role\": \"assistant\",\r\n        \"content\": \"매운거 좋아하는구나 대단해\"\r\n    }\r\n사용자 정보 요약 : \r\n-매운 음식을 좋아함"},
-                           {"role": "user", "content": "대화 내용 : \r\n" + text}]
+            preset_text = [{
+                "role": "system",
+                "content": "###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n[\n    {\n        \"role\": \"user\",\n        \"content\": \"나 너무 걱정돼\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"걱정되는 게 있구나 무슨 일 있어?\"\n    },\n    {\n        \"role\": \"user\",\n        \"content\": \"곧 있으면 개발자 경진대회인데 내가 잘하고 있나 그런 생각이 들어\"\n    }\n]\n사용자 정보 요약 : \n- 개발자 경진대회를 앞두고 걱정이 많음\n\n\n###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n    {\n        \"role\": \"user\",\n        \"content\": \"대회 끝나고 떡볶이 먹을거야~!\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"떡볶이 좋지! 대회 잘 끝내고 같이 먹으러 가자\"\n    }\n사용자 정보 요약 : \n- 대회가 끝난 후 떡볶이를 먹을 예정임\n\n\n###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n    {\n        \"role\": \"user\",\n        \"content\": \"좋아 너는 매운거 잘먹어?\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"나는 잘 먹지는 못해. 너는 잘 먹어?\"\n    },\n    {\n        \"role\": \"user\",\n        \"content\": \"응! 나는 매운거 좋아해!\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"매운거 좋아하는구나 대단해\"\n    }\n사용자 정보 요약 : \n-매운 음식을 좋아함"
+            },
+                {"role": "user", "content": "대화 내용 : \r\n" + text}]
             return preset_text
         else:
             return None
