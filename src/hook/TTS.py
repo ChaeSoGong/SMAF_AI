@@ -27,17 +27,14 @@ class TTS:
     @staticmethod
     @router.post("/tts/t")
     def to_t(data: Model):
-        logging.warning(data.text)
         result = TTS().tts(data.text, "ko-KR-Neural2-C")
         if result:
-            logging.warning(result)
             return JSONResponse({"result": result, "response_code": 200})
         else:
             return JSONResponse({"result": "this is wrong", "response_code": 400})
 
     @staticmethod
     def tts(text, voice):
-        logging.warning("tts start")
         api_key = os.getenv("google_api_key")
         data = {
             "voice": {
