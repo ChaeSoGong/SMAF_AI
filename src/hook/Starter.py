@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 import dotenv
 import os
 import json
+import random
 
 dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
@@ -18,8 +19,13 @@ class Starter:
     @staticmethod
     @router.post("/conversation/start/f")
     def conversation_starter_f():
-        ConversationSummary().completion_executor()
-        return JSONResponse({"result": Starter().execute_f(), "response_code": 200})
+        result = ConversationSummary().completion_executor()
+        if result.get('status_code') == 2000:
+            questions = ["안녕 너는 무슨 대화를 좋아해?","요즘 관심사가 뭐야?","너가 좋아하는게 뭔지 궁금해","배 안고파? 너는 뭐 먹고싶어?"]
+            random_number = random.randint(0, 3)
+            return JSONResponse({"result": questions[random_number], "response_code": 200})
+        else:
+            return JSONResponse({"result": Starter().execute_f(), "response_code": 200})
 
     def __init__(self):
         self._host = 'https://clovastudio.stream.ntruss.com'

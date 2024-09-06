@@ -6,6 +6,7 @@ from src.hook.Summary import ConversationSummary
 import dotenv
 import os
 import json
+import random
 
 dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
@@ -18,8 +19,13 @@ class StarterT:
     @staticmethod
     @router.post("/conversation/start/t")
     def conversation_starter_t():
-        ConversationSummary().completion_executor()
-        return JSONResponse({"result": StarterT().execute_t(), "response_code": 200})
+        result = ConversationSummary().completion_executor()
+        if result.get('status_code') == 2000:
+            questions = ["좋아하는 음식 있어?","요즘 관심사가 뭐야?", "너 취미 있어?", "아 배고파. 너 밥 먹었어?"]
+            random_number = random.randint(0, 3)
+            return JSONResponse({"result": questions[random_number], "response_code": 200})
+        else:
+            return JSONResponse({"result": StarterT().execute_t(), "response_code": 200})
 
     def __init__(self):
         self._host = 'https://clovastudio.stream.ntruss.com'
