@@ -45,6 +45,8 @@ class CompletionExecutor:
     @staticmethod
     def completion_executor(text):
         try:
+            if text == "":
+                return {"result": "", "status_code": 2000}
             preset_text = CompletionExecutor().create_preset(text)
             request_data = {
                 'messages': preset_text,

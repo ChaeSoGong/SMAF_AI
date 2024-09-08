@@ -8,6 +8,7 @@ from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from fastapi import APIRouter
+import random
 
 
 class Model(BaseModel):
@@ -37,6 +38,10 @@ class SaveVoiceAPI:
                     logging.warning(stt_result.get("result"))
                     if response.get("status_code") == 200:
                         return JSONResponse(content={"result": response.get("result"), "status_code": 200})
+                    elif response.get("status_code") == 2000:
+                        questions = ["왜 불러", "왜 말을 안해", "응? 뭐라고?", "뭐라고 했어?"]
+                        random_number = random.randint(0, 3)
+                        return JSONResponse(content={"result": questions[random_number], "status_code": 200})
                     else:
                         return JSONResponse(content={"CompletionExecutorError": response.get("result"), "status_code": 400})
                 else:
@@ -57,12 +62,15 @@ class SaveVoiceAPI:
             file_path = os.path.join(base_dir, 'content', filename)
             with open(file_path, "wb") as f:
                 f.write(audio_bytes)
-                # 녹음 파일 text로 변경
                 stt_result = STT.stt(file_path)  # stt 메서드 호출
                 if stt_result.get("status_code") == 200:
                     response = CompletionExecutorT().completion_executor_t(stt_result.get("result"))
                     if response.get("status_code") == 200:
                         return JSONResponse(content={"result": response.get("result"), "status_code": 200})
+                    elif response.get("status_code") == 2000:
+                        questions = ["왜 불러", "왜 말을 안해", "응? 뭐라고?", "뭐라고 했어?"]
+                        random_number = random.randint(0, 3)
+                        return JSONResponse(content={"result": questions[random_number], "status_code": 200})
                     else:
                         return JSONResponse(
                             content={"CompletionExecutorError_t": response.get("result"), "status_code": 400})

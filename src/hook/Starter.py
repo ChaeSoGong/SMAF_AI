@@ -3,6 +3,8 @@ import requests
 from fastapi import APIRouter
 from src.hook.Summary import ConversationSummary
 from fastapi.responses import JSONResponse
+from src.hook.PromptJson import PromptJson
+
 import dotenv
 import os
 import json
@@ -23,9 +25,14 @@ class Starter:
         if result.get('status_code') == 2000:
             questions = ["안녕 너는 무슨 대화를 좋아해?","요즘 관심사가 뭐야?","너가 좋아하는게 뭔지 궁금해","배 안고파? 너는 뭐 먹고싶어?"]
             random_number = random.randint(0, 3)
+            prompt_executor = PromptJson()
+            prompt_executor.prompt(0, "no", questions[random_number])
             return JSONResponse({"result": questions[random_number], "response_code": 200})
         else:
-            return JSONResponse({"result": Starter().execute_f(), "response_code": 200})
+            assistant_query = Starter().execute_f()
+            prompt_executor = PromptJson()
+            prompt_executor.prompt(0, "no", assistant_query)
+            return JSONResponse({"result": assistant_query, "response_code": 200})
 
     def __init__(self):
         self._host = 'https://clovastudio.stream.ntruss.com'
