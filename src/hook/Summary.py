@@ -13,11 +13,12 @@ dotenv.load_dotenv('.env')
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
+
 # 정보 userInformation에 요약해서 넣어놓고 prompt.json에 내용 다 삭제해야 하나? - no
 class ConversationSummary:
     def __init__(self):
         api_key = os.getenv('api_key')
-        api_key_primary_val = os.getenv('sliding_api_key_primary_val') #Sliding이랑 summary primary_val이 같음
+        api_key_primary_val = os.getenv('sliding_api_key_primary_val')  # Sliding이랑 summary primary_val이 같음
         request_id = os.getenv('summary_request_id')
         self._host = 'https://clovastudio.stream.ntruss.com'
         self._api_key = api_key
@@ -46,7 +47,7 @@ class ConversationSummary:
             text = f_text + t_text
             preset_text = [{
                 "role": "system",
-                "content": "###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n[\n    {\n        \"role\": \"user\",\n        \"content\": \"나 너무 걱정돼\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"걱정되는 게 있구나 무슨 일 있어?\"\n    },\n    {\n        \"role\": \"user\",\n        \"content\": \"곧 있으면 개발자 경진대회인데 내가 잘하고 있나 그런 생각이 들어\"\n    }\n]\n사용자 정보 요약 : \n- 개발자 경진대회를 앞두고 걱정이 많음\n\n\n###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n    {\n        \"role\": \"user\",\n        \"content\": \"대회 끝나고 떡볶이 먹을거야~!\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"떡볶이 좋지! 대회 잘 끝내고 같이 먹으러 가자\"\n    }\n사용자 정보 요약 : \n- 대회가 끝난 후 떡볶이를 먹을 예정임\n\n\n###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n    {\n        \"role\": \"user\",\n        \"content\": \"좋아 너는 매운거 잘먹어?\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"나는 잘 먹지는 못해. 너는 잘 먹어?\"\n    },\n    {\n        \"role\": \"user\",\n        \"content\": \"응! 나는 매운거 좋아해!\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"매운거 좋아하는구나 대단해\"\n    }\n사용자 정보 요약 : \n-매운 음식을 좋아함"
+                "content": "###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n[\n    {\n        \"role\": \"user\",\n        \"content\": \"나 너무 걱정돼\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"걱정되는 게 있구나 무슨 일 있어?\"\n    },\n    {\n        \"role\": \"user\",\n        \"content\": \"곧 있으면 개발자 경진대회인데 내가 잘하고 있나 그런 생각이 들어\"\n    }\n]\n사용자 정보 요약 : \n- 개발자 경진대회를 앞두고 걱정이 많음\n\n\n###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n    {\n        \"role\": \"user\",\n        \"content\": \"대회 끝나고 떡볶이 먹을거야~!\"\n    },\n    {\n        \"role\": \"assistant\",\n        \"content\": \"떡볶이 좋지! 대회 잘 끝내고 같이 먹으러 가자\"\n    },\n    {\n\n        \"role\": \"user\",\r\n        \"content\": \"좋아! 너 매운거 잘먹어?\"\r\n    },\r\n    {\r\n        \"role\": \"assistant\",\r\n        \"content\": \"아니 나는 매운거 잘 못 먹어 너는 잘먹어?\"\r\n    },\r\n    {\r\n        \"role\": \"user\",\r\n        \"content\": \"응 나는 매운거 좋아해\"\r\n    }\n사용자 정보 요약 : \n- 대회가 끝난 후 떡볶이를 먹을 예정임\n- 매운 음식을 좋아함\n\n\n###\n대화 내용을 통해 사용자 정보를 요약하세요.\n대화 내용 : \n    {\n        \"role\": \"user\",\r\n        \"content\": \"턱이 아파\"\r\n    },\r\n    {\r\n        \"role\": \"assistant\",\r\n        \"content\": \"치과 가보는 건 어때?\"\r\n    },\r\n    {\r\n        \"role\": \"user\",\r\n        \"content\": \"가봤는데 별로 도움 안되던데?\"\r\n    },\r\n    {\r\n        \"role\": \"assistant\",\r\n        \"content\": \"그럼 다른 병원이라도 가봐\"\r\n    },\r\n    {\r\n        \"role\": \"user\",\r\n        \"content\": \"너 병원 가봤어?\"\r\n    },\r\n    {\r\n        \"role\": \"assistant\",\r\n        \"content\": \"나는 건강하니까 병원 갈 일 없어\"\r\n    }\n사용자 정보 요약 : \n- 턱이 아프고 병원에 가봤지만 소용이 없었음."
             },
                 {"role": "user", "content": "대화 내용 : \r\n" + text}]
             return preset_text
