@@ -23,7 +23,7 @@ class Starter:
     def conversation_starter_f():
         result = ConversationSummary().completion_executor()
         if result.get('status_code') == 2000:
-            questions = ["안녕 너는 무슨 대화를 좋아해?","요즘 관심사가 뭐야?","너가 좋아하는게 뭔지 궁금해","배 안고파? 너는 뭐 먹고싶어?"]
+            questions = ["안녕 너는 무슨 대화를 좋아해?","요즘 관심 있는게 뭐야?","너가 좋아하는게 뭔지 궁금해","배 안고파? 너는 뭐 먹고싶어?"]
             random_number = random.randint(0, 3)
             prompt_executor = PromptJson()
             prompt_executor.prompt(0, "no", questions[random_number])
@@ -53,7 +53,7 @@ class Starter:
             if line:
                 preset_text = [{
                     "role": "system",
-                    "content": "사용자 정보 요약을 참고하여 사용자에게 질문을 합니다.\n###질문 패턴###\r\n- 항상 반말로 질문한다.\r\n- 짧게 질문한다.\n- 착하고 친절한 말투로 질문한다.\n###\n질문 패턴과 사용자의 정보를 참고하여 사용자에게 질문합니다.\n\n사용자 정보 :\r\n곧 결혼식을 앞두고 있다.\r\n다이어트를 하고 있다.\r\n살이 잘 빠지지 않아 힘들어 한다.\n\n너 결혼하잖아 결혼 준비는 잘 돼가?\n###\n질문 패턴과 사용자의 정보를 참고하여 사용자에게 질문합니다. \n\n- 다이어트를 하려고 했으나, 건강에 좋지 않다는 조언을 듣고 포기함\n\n\n너 다이어트 하잖아 다이어트 힘들지 않아?"
+                    "content": "###질문 패턴###\r\n- 항상 반말로 질문한다.\r\n- 짧게 질문한다.\n- 착하고 친절한 말투로 질문한다.\n###\n질문 패턴과 사용자의 정보를 참고하여 사용자에게 질문합니다.\n\n사용자 정보 :\r\n곧 결혼식을 앞두고 있다.\r\n다이어트를 하고 있다.\r\n살이 잘 빠지지 않아 힘들어 한다.\n\n너 결혼하잖아 결혼 준비는 잘 돼가?\n###\n질문 패턴과 사용자의 정보를 참고하여 사용자에게 질문합니다. \n\r\n사용자 정보 요약 : \r\n- 치즈 케이크를 좋아함\r\n- 우울함\r\n\r\n너 혹시 지금 우울해?"
                 },
                     {"role": "user",
                      "content": line}]
